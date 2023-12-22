@@ -1,4 +1,4 @@
--- create table DISCO
+-- create table DISC
 CREATE TABLE DISCO (
   NroSerie VARCHAR (50) NOT NULL,
   TitoloAlbum TEXT (50) NOT NULL,
