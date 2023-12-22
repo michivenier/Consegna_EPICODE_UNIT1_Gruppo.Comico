@@ -1,0 +1,78 @@
+-- create table DISCO
+CREATE TABLE DISCO (
+  NroSerie VARCHAR (50) NOT NULL,
+  TitoloAlbum TEXT (50) NOT NULL,
+  Anno VARCHAR (50),
+    Prezzo INTEGER NOT NULL
+);
+-- values di DISCO
+INSERT INTO DISCO VALUES (01, 'album_01',1970,10);
+INSERT INTO DISCO VALUES (02, 'album_02',1980,15);
+
+-- create table CONTIENE
+CREATE TABLE CONTIENE (
+  NroSerieDisco VARCHAR (50) NOT NULL PRIMARY KEY,
+  CodiceReg VARCHAR (50) NOT NULL,
+  NroProg VARCHAR (50)
+);
+-- values di CONTIENE
+INSERT INTO CONTIENE VALUES 
+    (01,111, 001),
+    (02,222, 002);
+
+-- create table ESECUZIONE
+CREATE TABLE ESECUZIONE (
+  CodiceReg VARCHAR (50) NOT NULL,
+  TitoloCanz VARCHAR (50) NOT NULL,
+  Anno VARCHAR (50) 
+);
+-- values di ESECUZIONE
+INSERT INTO CONTIENE VALUES 
+    (111, 'canzone_del_sole', 1971),
+    (222, 'il_pescatore', 1968),
+    (333,'andrea', NULL),
+    (444, 'appassionata', 1806);
+
+-- create table AUTORE
+CREATE TABLE AUTORE (
+  Nome VARCHAR (50) NOT NULL,
+  TitoloCanz VARCHAR (50) NOT NULL
+);
+-- values di AUTORE
+INSERT INTO AUTORE VALUES 
+    ('battisti', 'canzone_del_sole'),
+    ('de_andrè', 'il_pescatore'),
+    ('de_andrè', 'andrea'),
+    ('mr_x','appassionata');
+
+-- create table CANTANTE
+CREATE TABLE CANTANTE (
+  NomeCantante TEXT (50) NOT NULL,
+  CodiceReg VARCHAR (50) NOT NULL
+);
+-- values di CANTANTE
+INSERT INTO CANTANTE VALUES 
+    ('battisti',111),
+    ('de_andrè',222),
+    ('de_andrè',333),
+    ('mr_y',444);
+
+#1. I cantautori (persone che hanno cantato e scritto 
+#la stessa canzone) il cui nome inizia per 'D’
+SELECT Nome 
+FROM AUTORE A
+JOIN CANTANTE C ON A.Nome=C.NomeCantante WHERE Nome LIKE 'd%';
+
+-- variante 1 (uso AND invece di JOIN)
+SELECT Nome FROM AUTORE,CANTANTE WHERE Nome LIKE 'd%' AND NomeCantante=Nome;
+
+-- variante 2 (non rinomino gli insiemi con la loro lettera iniziale)
+SELECT Nome 
+FROM AUTORE
+JOIN CANTANTE ON AUTORE.Nome=CANTANTE.NomeCantante WHERE Nome LIKE 'd%';
+
+#2. I titoli dei dischi che contengono canzoni di cui
+#non si conosce l'anno di registrazione
+SELECT TitoloAlbum 
+FROM DISCO D
+JOIN ESECUZIONE E ON D.TitoloCanz=C.NomeCantante WHERE  'd%';
